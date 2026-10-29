@@ -292,6 +292,17 @@ def zero_sum(matrix: Sequence[Sequence[float]], name: str = "Zero-sum game") -> 
         name=name,
     )
 
+def chicken() -> Game:
+    """Chicken: T > R > S > P, so the two equilibria are asymmetric."""
+    return Game(
+        row_payoffs=[[3, 2], [4, 0]],
+        col_payoffs=[[3, 4], [2, 0]],
+        row_actions=["Swerve", "Straight"],
+        col_actions=["Swerve", "Straight"],
+        name="Chicken",
+    )
+
+
 
 PRESETS: dict[str, Callable[[], Game]] = {
     "Prisoner's Dilemma": prisoners_dilemma,
@@ -301,4 +312,5 @@ PRESETS: dict[str, Callable[[], Game]] = {
     "Battle of the Sexes": battle_of_the_sexes,
     "Rock-Paper-Scissors": rock_paper_scissors,
     "Hawk-Dove": hawk_dove,
+    "Chicken": chicken,
 }
