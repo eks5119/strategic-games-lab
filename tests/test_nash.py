@@ -16,6 +16,7 @@ from strategic_games.games import (
     prisoners_dilemma,
     rock_paper_scissors,
     stag_hunt,
+    chicken,
 )
 from strategic_games.nash import (
     col_best_responses,
@@ -205,3 +206,29 @@ def test_summary_table_lists_equilibria():
     ]
     assert (table["type"] == "pure").sum() == 2
     assert (table["type"] == "mixed").sum() == 1
+
+
+ # --------------------------------------------------------------------- chicken
+def test_chicken_has_two_asymmetric_equilibria():
+    eq = {e.profile for e in pure_nash_equilibria(chicken())}
+    assert eq == {("Straight", "Swerve"), ("Swerve", "Straight")}
+
+
+def test_chicken_mutual_swerve_is_not_an_equilibrium():
+    profiles = {e.profile for e in pure_nash_equilibria(chicken())}
+    assert ("Swerve", "Swerve") not in profiles
+
+
+def test_chicken_mixed_equilibrium_values():
+    # row indifferent when 3q + 2(1 - q) = 4q  ->  q = 2/3
+    eq = [e for e in mixed_nash_equilibria(chicken()) if not e.is_pure]
+    assert len(eq) == 1
+    assert eq[0].row_probs == pytest.approx((2 / 3, 1 / 3))
+    assert eq[0].col_probs == pytest.approx((2 / 3, 1 / 3))
+    assert eq[0].row_payoff == pytest.approx(8 / 3)
+
+
+def test_chicken_has_no_strictly_dominated_strategy():
+    assert strictly_dominated_rows(chicken()) == {}
+    assert strictly_dominated_cols(chicken()) == {}
+
