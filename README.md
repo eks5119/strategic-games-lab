@@ -1,5 +1,8 @@
 # Strategic Games Lab
 
+
+**Live demo:** https://strategic-games-lab-kvf5ye2xz9urrtejwszope.streamlit.app/
+
 A small, tested game-theory engine with an interactive web front end. Enter a
 strategic situation as a payoff matrix, and the engine finds the Nash equilibria,
 explains why each one is stable, and then simulates how different strategies
